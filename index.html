@@ -5,292 +5,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Moreton City Pickleball — Host Tools</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;1,700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
- 
     :root {
       --navy: #1a2d5a;
       --navy-dark: #111e3d;
       --yellow: #f5c518;
-      --yellow-light: #fff8d6;
       --bg: #f0f2f7;
       --white: #ffffff;
       --text: #1a2d5a;
       --muted: #6b7a99;
       --border: #d4daea;
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 18px;
     }
- 
-    html { scroll-behavior: smooth; }
- 
-    body {
-      font-family: "Barlow", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
- 
-    /* ── HERO ── */
-    .hero {
-      background: var(--navy);
-      padding: 48px 24px 56px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% 110%, rgba(245,197,24,0.12) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero-inner {
-      position: relative;
-      z-index: 1;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    .logo-wrap {
-      width: 96px;
-      height: 96px;
-      border-radius: 50%;
-      overflow: hidden;
-      margin: 0 auto 20px;
-      border: 3px solid var(--yellow);
-      background: var(--white);
-      box-shadow: 0 0 0 6px rgba(245,197,24,0.15);
-    }
+    body { font-family: "Barlow", sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+
+    .hero { background: var(--navy); padding: 48px 24px 56px; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 110%, rgba(245,197,24,0.12) 0%, transparent 70%); pointer-events: none; }
+    .hero-inner { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+    .logo-wrap { width: 96px; height: 96px; border-radius: 50%; overflow: hidden; margin: 0 auto 20px; border: 3px solid var(--yellow); background: var(--white); box-shadow: 0 0 0 6px rgba(245,197,24,0.15); }
     .logo-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .hero-eyebrow {
-      display: inline-block;
-      background: var(--yellow);
-      color: var(--navy);
-      font-family: "Barlow Condensed", sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 4px 14px;
-      border-radius: 20px;
-      margin-bottom: 14px;
-    }
-    .hero h1 {
-      font-family: "Barlow Condensed", sans-serif;
-      font-size: clamp(32px, 6vw, 52px);
-      font-weight: 700;
-      color: var(--white);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      line-height: 1.05;
-      margin-bottom: 14px;
-    }
+    .hero-eyebrow { display: inline-block; background: var(--yellow); color: var(--navy); font-family: "Barlow Condensed", sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 4px 14px; border-radius: 20px; margin-bottom: 14px; }
+    .hero h1 { font-family: "Barlow Condensed", sans-serif; font-size: clamp(32px, 6vw, 52px); font-weight: 700; color: var(--white); letter-spacing: 1px; text-transform: uppercase; line-height: 1.05; margin-bottom: 14px; }
     .hero h1 span { color: var(--yellow); }
-    .hero-desc {
-      font-size: clamp(13px, 2vw, 15px);
-      color: rgba(255,255,255,0.65);
-      line-height: 1.65;
-      max-width: 420px;
-      margin: 0 auto;
-    }
- 
-    /* ── WAVE DIVIDER ── */
-    .wave {
-      display: block;
-      width: 100%;
-      height: 48px;
-      background: var(--navy);
-      clip-path: ellipse(55% 100% at 50% 0%);
-      margin-bottom: -2px;
-    }
- 
-    /* ── MAIN CONTENT ── */
-    main {
-      flex: 1;
-      padding: 32px 20px 48px;
-      max-width: 900px;
-      margin: 0 auto;
-      width: 100%;
-    }
- 
-    .section-label {
-      font-family: "Barlow Condensed", sans-serif;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 16px;
-    }
- 
-    /* ── CTA CARD ── */
-    .cta-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      margin-bottom: 28px;
-    }
-    .cta-card-top {
-      background: var(--navy);
-      padding: 28px 28px 24px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-    .cta-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 14px;
-      background: var(--yellow);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      flex-shrink: 0;
-    }
-    .cta-card-top h2 {
-      font-family: "Barlow Condensed", sans-serif;
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--white);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      line-height: 1.1;
-    }
-    .cta-card-top p {
-      font-size: 13px;
-      color: rgba(255,255,255,0.6);
-      margin-top: 4px;
-      line-height: 1.5;
-    }
-    .cta-card-body {
-      padding: 20px 28px 24px;
-    }
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-    .feature {
-      background: var(--bg);
-      border-radius: var(--radius-sm);
-      padding: 9px 12px;
-      font-size: 13px;
-      color: var(--text);
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .feature-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--yellow);
-      flex-shrink: 0;
-    }
-    .cta-btn {
-      display: block;
-      width: 100%;
-      padding: 15px 20px;
-      background: var(--yellow);
-      border: none;
-      border-radius: var(--radius-md);
-      font-family: "Barlow Condensed", sans-serif;
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--navy);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      text-align: center;
-      text-decoration: none;
-      cursor: pointer;
-      transition: background 0.15s, transform 0.1s;
-    }
-    .cta-btn:hover { background: #f0bc00; }
-    .cta-btn:active { transform: scale(0.98); }
- 
-    /* ── INFO CARDS GRID ── */
-    .info-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-    .info-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 18px 20px;
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-    }
-    .info-card-icon {
-      font-size: 22px;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-    .info-card h3 {
-      font-family: "Barlow Condensed", sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--navy);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 4px;
-    }
-    .info-card p {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
- 
-    /* ── FOOTER ── */
-    footer {
-      background: var(--navy-dark);
-      text-align: center;
-      padding: 20px;
-      font-size: 12px;
-      color: rgba(255,255,255,0.4);
-      letter-spacing: 0.5px;
-    }
- 
-    /* ── RESPONSIVE ── */
-    @media (min-width: 540px) {
-      .features-grid { grid-template-columns: repeat(3, 1fr); }
-      .info-grid { grid-template-columns: repeat(2, 1fr); }
-    }
- 
+    .hero-desc { font-size: clamp(13px, 2vw, 15px); color: rgba(255,255,255,0.65); line-height: 1.65; max-width: 420px; margin: 0 auto; }
+
+    .wave { display: block; width: 100%; height: 48px; background: var(--navy); clip-path: ellipse(55% 100% at 50% 0%); margin-bottom: -2px; }
+
+    main { flex: 1; padding: 32px 20px 48px; max-width: 900px; margin: 0 auto; width: 100%; }
+
+    .nav-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .nav-tile { background: var(--white); border: 1px solid var(--border); border-radius: 18px; padding: 24px 16px 20px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-decoration: none; color: var(--text); transition: border-color 0.15s, transform 0.1s; text-align: center; }
+    .nav-tile:hover { border-color: var(--yellow); }
+    .nav-tile:active { transform: scale(0.97); }
+    .nav-tile-icon { width: 56px; height: 56px; border-radius: 16px; background: var(--navy); display: flex; align-items: center; justify-content: center; font-size: 26px; }
+    .nav-tile-label { font-family: "Barlow Condensed", sans-serif; font-size: 16px; font-weight: 700; color: var(--navy); letter-spacing: 0.5px; text-transform: uppercase; line-height: 1.2; }
+
+    footer { background: var(--navy-dark); text-align: center; padding: 20px; font-size: 12px; color: rgba(255,255,255,0.4); letter-spacing: 0.5px; }
+
+    @media (min-width: 480px) { .nav-grid { grid-template-columns: repeat(3, 1fr); } }
     @media (min-width: 768px) {
       .hero { padding: 72px 40px 80px; }
       .logo-wrap { width: 110px; height: 110px; }
-      main { padding: 48px 32px 64px; }
-      .cta-card-top { padding: 32px 36px 28px; gap: 24px; }
-      .cta-card-body { padding: 24px 36px 32px; }
-      .cta-icon { width: 64px; height: 64px; font-size: 30px; }
-      .cta-card-top h2 { font-size: 28px; }
-      .features-grid { grid-template-columns: repeat(3, 1fr); }
-      .info-grid { grid-template-columns: repeat(3, 1fr); }
+      main { padding: 40px 32px 56px; }
+      .nav-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .nav-tile { padding: 28px 20px 24px; }
+      .nav-tile-icon { width: 64px; height: 64px; font-size: 30px; }
+      .nav-tile-label { font-size: 18px; }
     }
- 
-    @media (min-width: 1024px) {
-      .hero { padding: 96px 40px 108px; }
-      .cta-card { display: grid; grid-template-columns: 1fr 1fr; }
-      .cta-card-top { border-radius: 0; flex-direction: column; align-items: flex-start; justify-content: center; padding: 40px; }
-      .cta-card-body { padding: 40px; display: flex; flex-direction: column; justify-content: center; }
-      .features-grid { grid-template-columns: repeat(2, 1fr); }
-    }
+    @media (min-width: 1024px) { .nav-grid { grid-template-columns: repeat(6, 1fr); } }
   </style>
 </head>
 <body>
- 
+
 <section class="hero">
   <div class="hero-inner">
     <div class="logo-wrap">
@@ -298,65 +65,44 @@
     </div>
     <div class="hero-eyebrow">Session Host Resources</div>
     <h1>Moreton City<br><span>Pickleball</span></h1>
-    <p class="hero-desc">Everything you need to run a great session — checklists, game formats, rules, contacts and incident reporting, all in one place.</p>
+    <p class="hero-desc">Everything you need to run a great session — checklists, formats, rules, contacts and incident reporting.</p>
   </div>
 </section>
- 
+
 <div class="wave" aria-hidden="true"></div>
- 
+
 <main>
-  <p class="section-label">Host Tools</p>
- 
-  <div class="cta-card">
-    <div class="cta-card-top">
-      <div class="cta-icon">🏓</div>
-      <div>
-        <h2>Host Assistant App</h2>
-        <p>Your all-in-one tool for session hosting. Works on any phone — no install needed.</p>
-      </div>
-    </div>
-    <div class="cta-card-body">
-      <div class="features-grid">
-        <div class="feature"><div class="feature-dot"></div>Welcome checklist</div>
-        <div class="feature"><div class="feature-dot"></div>Game formats</div>
-        <div class="feature"><div class="feature-dot"></div>Rules reference</div>
-        <div class="feature"><div class="feature-dot"></div>Incident reports</div>
-        <div class="feature"><div class="feature-dot"></div>Contacts</div>
-        <div class="feature"><div class="feature-dot"></div>Help &amp; info</div>
-      </div>
-      <a class="cta-btn" href="mcp_host_assistant.html">Open Host Assistant &rarr;</a>
-    </div>
-  </div>
- 
-  <p class="section-label">About the App</p>
-  <div class="info-grid">
-    <div class="info-card">
-      <div class="info-card-icon">📱</div>
-      <div>
-        <h3>Works on Any Device</h3>
-        <p>Optimised for phones but fully responsive on tablets and desktops too.</p>
-      </div>
-    </div>
-    <div class="info-card">
-      <div class="info-card-icon">📶</div>
-      <div>
-        <h3>No Internet Required</h3>
-        <p>Once loaded, the app works offline. Incident reports are saved locally on your device.</p>
-      </div>
-    </div>
-    <div class="info-card">
-      <div class="info-card-icon">✉️</div>
-      <div>
-        <h3>Email Incident Reports</h3>
-        <p>Fill in the form and send a formatted report straight to the committee from your phone.</p>
-      </div>
-    </div>
+  <div class="nav-grid">
+    <a class="nav-tile" href="mcp_host_assistant.html#checklist">
+      <div class="nav-tile-icon">✓</div>
+      <div class="nav-tile-label">Welcome</div>
+    </a>
+    <a class="nav-tile" href="mcp_host_assistant.html#formats">
+      <div class="nav-tile-icon">⚡</div>
+      <div class="nav-tile-label">Formats</div>
+    </a>
+    <a class="nav-tile" href="mcp_host_assistant.html#rules">
+      <div class="nav-tile-icon">📋</div>
+      <div class="nav-tile-label">Rules</div>
+    </a>
+    <a class="nav-tile" href="mcp_host_assistant.html#incident">
+      <div class="nav-tile-icon">⚠️</div>
+      <div class="nav-tile-label">Incident</div>
+    </a>
+    <a class="nav-tile" href="mcp_host_assistant.html#contacts">
+      <div class="nav-tile-icon">👥</div>
+      <div class="nav-tile-label">Contacts</div>
+    </a>
+    <a class="nav-tile" href="mcp_host_assistant.html#help">
+      <div class="nav-tile-icon">🆘</div>
+      <div class="nav-tile-label">Help</div>
+    </a>
   </div>
 </main>
- 
+
 <footer>
   Moreton City Pickleball Club &nbsp;&middot;&nbsp; Brisbane, QLD
 </footer>
- 
+
 </body>
 </html>
