@@ -621,6 +621,10 @@
     <div id="statsView" style="display:none;">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;" id="statsGrid"></div>
     </div>
+
+    <div style="margin-top:24px;">
+      <button onclick="emailDraw()" style="display:block;width:100%;padding:14px;background:transparent;border:2px solid var(--yellow);border-radius:10px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:var(--yellow);letter-spacing:1px;cursor:pointer;">✉ Email Court Allocations</button>
+    </div>
   </div>
 
   <div id="emptyState" class="empty-state">
@@ -974,6 +978,31 @@
     else if (view === 'table') document.getElementById('resultsTitle').textContent = 'All Rounds Overview';
     else document.getElementById('resultsTitle').textContent = 'Pairing Statistics';
   }
+  function emailDraw() {
+    if (!allRounds.length) return;
+    const courts = parseInt(document.getElementById('courtCount')?.textContent) || settings.courts;
+    let body = 'MORETON CITY PICKLEBALL — COURT DRAW\n';
+    body += '=====================================\n\n';
+    body += `Players: ${players.filter(p => p.trim()).join(', ')}\n`;
+    body += `Courts: ${settings.courts}  |  Rounds: ${allRounds.length}  |  Per Court: ${settings.perCourt}\n\n`;
+
+    allRounds.forEach((round, ri) => {
+      body += `ROUND ${ri + 1}\n${'─'.repeat(30)}\n`;
+      round.courts.forEach((court, ci) => {
+        const teamA = court[0] ? court[0].join(' & ') : '';
+        const teamB = court[1] ? court[1].join(' & ') : '';
+        body += `  Court ${ci + 1}: ${teamA}  vs  ${teamB}\n`;
+      });
+      if (round.sitting && round.sitting.length) {
+        body += `  Sitting out: ${round.sitting.join(', ')}\n`;
+      }
+      body += '\n';
+    });
+
+    const subject = encodeURIComponent('MCP Court Draw — ' + new Date().toLocaleDateString('en-AU'));
+    window.location.href = 'mailto:?subject=' + subject + '&body=' + encodeURIComponent(body);
+  }
+
 </script>
 </body>
 </html>
