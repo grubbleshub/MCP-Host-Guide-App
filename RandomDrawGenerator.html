@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MCP Random Draw Generator</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1a2d5a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="MCP Host">
+  <link rel="apple-touch-icon" href="icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -644,15 +650,48 @@
   let currentRound = 0;
   let currentView = 'cards';
 
+  // --- Persistence ---
+  function saveState() {
+    try {
+      localStorage.setItem('mcp_draw', JSON.stringify({ players, allRounds, settings }));
+    } catch(e) {}
+  }
+
+  function restoreState() {
+    try {
+      const saved = localStorage.getItem('mcp_draw');
+      if (!saved) return false;
+      const s = JSON.parse(saved);
+      if (s.players && s.players.length) players = s.players;
+      if (s.settings) settings = s.settings;
+      if (s.allRounds && s.allRounds.length) {
+        allRounds = s.allRounds;
+        return true;
+      }
+    } catch(e) {}
+    return false;
+  }
+
   // --- Init ---
+  const hasSavedDraw = restoreState();
   renderPlayers();
+
+  // Restore draw results if saved
+  if (hasSavedDraw) {
+    const validPlayers = players.filter(p => p.trim());
+    document.getElementById('resultsSection').style.display = 'block';
+    document.getElementById('emptyState').style.display = 'none';
+    renderRoundTabs();
+    showRound(0);
+    buildAllRoundsTable(validPlayers);
+  }
 
   function renderPlayers() {
     const list = document.getElementById('playerList');
     list.innerHTML = players.map((p, i) => `
       <div class="player-input-row">
         <input type="text" value="${p}" placeholder="Player name" 
-               oninput="players[${i}] = this.value; updatePlayerCount()"
+               oninput="players[${i}] = this.value; updatePlayerCount(); saveState()"
                onkeydown="if(event.key==='Enter') addPlayer()">
         <button class="btn-remove" onclick="removePlayer(${i})" title="Remove">×</button>
       </div>
@@ -675,6 +714,7 @@
   function removePlayer(i) {
     players.splice(i, 1);
     renderPlayers();
+    saveState();
   }
 
   function adjustNum(key, delta) {
@@ -834,6 +874,7 @@
     renderRoundTabs();
     showRound(0);
     buildAllRoundsTable(validPlayers);
+    saveState();
   }
 
   function resetResults() {
@@ -841,6 +882,7 @@
     document.getElementById('resultsSection').style.display = 'none';
     document.getElementById('emptyState').style.display = 'block';
     document.getElementById('warningBar').style.display = 'none';
+    try { localStorage.removeItem('mcp_draw'); } catch(e) {}
   }
 
   // Build partner/opponent summary from completed rounds
@@ -1043,6 +1085,7 @@
 
       players = names;
       renderPlayers();
+      saveState();
       status.textContent = `✓ Loaded ${names.length} players`;
       setTimeout(() => { status.style.display = 'none'; }, 3000);
     } catch (e) {
